@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.Login_page;
@@ -15,14 +16,17 @@ import java.time.Duration;
 
 public class LoginStepDefs extends Login_page {
 
-    @Given("user is login page")
-    public void userIsLoginPage() {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+    @Given("user is on login page")
+    public void userIsOnLoginPage() {
+        Driver.getDriver().get(
+                ConfigurationReader.getProperty("url")
+        );
     }
 
     @When("enters username")
     public void entersUsername() {
         input_user.sendKeys(ConfigurationReader.getProperty("username"));
+
     }
 
     @Then("enters password")
@@ -39,9 +43,39 @@ public class LoginStepDefs extends Login_page {
     public void userLoggedIn() {
 
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(loggedusername));
+        wait.until(ExpectedConditions.visibilityOf(logged_username));
 
-        Assert.assertTrue(loggedusername.isDisplayed());
+        Assert.assertTrue(logged_username.isDisplayed());
     }
+
+    @When("enters wrong username")
+    public void entersWrongUsername() {
+        input_user.sendKeys("someuser");
+    }
+
+    @Then("enters wrong password")
+    public void entersWrongPassword() {
+        input_password.sendKeys("somepassword");
+    }
+
+    @Then("user cannot login warning")
+    public void userCannotLoginWarning() {
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(wrong_login_warning));
+
+        Assert.assertTrue(wrong_login_warning.isDisplayed());
+
+    }
+
+    @Then("user get empty field warning")
+    public void userGetEmptyFieldWarning() {
+
+        Assert.assertEquals("Please fill out this field.",
+                Driver.getDriver().findElement(By.name("password")).getAttribute("validationMessage"));
+
+
+    }
+
 
 }

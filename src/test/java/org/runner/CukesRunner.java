@@ -15,7 +15,8 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "org/step_definitions",
         dryRun = false,
-        publish = false // report link on console
+        publish = false     // report link on console
+      //  tags = "@wip"
 )
 
 public class CukesRunner {
