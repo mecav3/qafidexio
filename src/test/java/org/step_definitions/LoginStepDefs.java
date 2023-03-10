@@ -4,14 +4,18 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.Login_page;
 import org.util.ConfigurationReader;
 import org.util.Driver;
 
+import java.io.File;
 import java.time.Duration;
 
 public class LoginStepDefs extends Login_page {
@@ -34,10 +38,6 @@ public class LoginStepDefs extends Login_page {
         input_password.sendKeys(ConfigurationReader.getProperty("password"));
     }
 
-    @And("clicks login button")
-    public void clicksLoginButton() {
-        button_login.click();
-    }
 
     @Then("user logged in")
     public void userLoggedIn() {
@@ -69,13 +69,26 @@ public class LoginStepDefs extends Login_page {
     }
 
     @Then("user get empty field warning")
-    public void userGetEmptyFieldWarning() {
+    public void userGetEmptyFieldWarning() throws Exception {
 
-        Assert.assertEquals("Please fill out this field.",
-                Driver.getDriver().findElement(By.name("password")).getAttribute("validationMessage"));
+        takeSnapShot( "validate_image.png");
 
+          Assert.assertEquals("Please fill out this field.",
+             Driver.getDriver().findElement(By.name("password")).getAttribute("validationMessage"));
 
     }
 
+    public static void takeSnapShot(String fileWithPath) throws Exception {
 
+        File SrcFile = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.FILE);
+
+        File DestFile = new File(fileWithPath);
+
+        FileUtils.copyFile(SrcFile, DestFile);
+    }
+
+    @And("clicks login button")
+    public void clicksLoginButton() {
+        button_login.click();
+    }
 }

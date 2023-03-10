@@ -29,9 +29,5 @@ public class Hooks {
 //    public void setup() {
 //        System.out.println("before step setup @BeforeStep");
 //    }
-//
-//    @AfterStep
-//    public void aftersetup() {
-//        System.out.println("before step setup @AfterStep");
-//    }
+
  }
