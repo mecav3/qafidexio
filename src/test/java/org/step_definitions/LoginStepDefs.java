@@ -29,13 +29,13 @@ public class LoginStepDefs extends Login_page {
 
     @When("enters username")
     public void entersUsername() {
-        input_user.sendKeys(ConfigurationReader.getProperty("username"));
+         input_user.sendKeys(ConfigurationReader.getProperty("username"));
 
     }
 
     @Then("enters password")
     public void entersPassword() {
-        input_password.sendKeys(ConfigurationReader.getProperty("password"));
+       input_password.sendKeys(ConfigurationReader.getProperty("password"));
     }
 
 
@@ -65,13 +65,12 @@ public class LoginStepDefs extends Login_page {
         wait.until(ExpectedConditions.visibilityOf(wrong_login_warning));
 
         Assert.assertTrue(wrong_login_warning.isDisplayed());
-
     }
 
     @Then("user get empty field warning")
     public void userGetEmptyFieldWarning() throws Exception {
 
-        takeSnapShot( "validate_image.png");
+        takeSnapShot( "target/validate_image.png");
 
           Assert.assertEquals("Please fill out this field.",
              Driver.getDriver().findElement(By.name("password")).getAttribute("validationMessage"));
@@ -79,11 +78,8 @@ public class LoginStepDefs extends Login_page {
     }
 
     public static void takeSnapShot(String fileWithPath) throws Exception {
-
         File SrcFile = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.FILE);
-
         File DestFile = new File(fileWithPath);
-
         FileUtils.copyFile(SrcFile, DestFile);
     }
 
