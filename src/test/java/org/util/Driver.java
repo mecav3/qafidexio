@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
 public class Driver {
     private Driver() {
@@ -44,15 +45,17 @@ public class Driver {
                     }
                     break;
                 case "chrome":
+                    System.setProperty("webdriver.http.factory", "jdk-http-client");
+
                     WebDriverManager.chromedriver().setup();
+                  //  WebDriverManager.chromedriver().browserVersion("110.0.5481").setup();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--lang=en");
-                    options.addArguments("--verbose");
-                    options.addArguments("--whitelisted-ips=''");
+                    options.addArguments("--remote-allow-origins=*");
 
                     driverPool.set(new ChromeDriver(options));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     System.out.println("CREATED DRIVER " + LocalTime.now());
                     break;
 
