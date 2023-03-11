@@ -16,6 +16,7 @@ import java.time.LocalTime;
 public class Driver {
     private Driver() {
     }
+
     static String browser;
     //  private static WebDriver driver;
     private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
@@ -46,6 +47,9 @@ public class Driver {
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--lang=en");
+                    options.addArguments("--verbose");
+                    options.addArguments("--whitelisted-ips=''");
+
                     driverPool.set(new ChromeDriver(options));
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

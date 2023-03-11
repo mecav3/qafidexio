@@ -30,14 +30,12 @@ public class LoginStepDefs extends Login_page {
     @When("enters username")
     public void entersUsername() {
          input_user.sendKeys(ConfigurationReader.getProperty("username"));
-
     }
 
     @Then("enters password")
     public void entersPassword() {
        input_password.sendKeys(ConfigurationReader.getProperty("password"));
     }
-
 
     @Then("user logged in")
     public void userLoggedIn() {
@@ -88,3 +86,4 @@ public class LoginStepDefs extends Login_page {
         button_login.click();
     }
 }
+
