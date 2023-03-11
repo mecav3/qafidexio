@@ -4,7 +4,9 @@ Feature: US-001 Login Functionality [AutomationS1-MC]
   Background: user at login page
     Given user is on login page
 
-  @FIX10-310 @wip
-  Scenario: Users enters password and password is hidden
+  @FIX10-311
+  Scenario: Users can log in with valid credentials using ENTER key
+    When enters username
     Then enters password
-    Then check password is hidden
+    And hits enter button
+    Then user logged in

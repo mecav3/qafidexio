@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +18,7 @@ import org.util.Driver;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.Objects;
 
 public class LoginStepDefs extends Login_page {
 
@@ -61,7 +63,7 @@ public class LoginStepDefs extends Login_page {
 
     @Then("user get empty field warning")
     public void userGetEmptyFieldWarning() throws Exception {
-       Driver.takeSnapShot("target/validate_image.png");
+        Driver.takeSnapShot("target/validate_image.png");
         Assert.assertEquals("Please fill out this field.",
                 input_password.getAttribute("validationMessage"));
     }
@@ -75,13 +77,21 @@ public class LoginStepDefs extends Login_page {
     public void checkPasswordIsHidden() throws Exception {
 
         System.out.println("required user : " + input_user.getAttribute("required"));
-        System.out.println("validation user : "+input_user.getAttribute("validationMessage"));
+        System.out.println("validation user : " + input_user.getAttribute("validationMessage"));
 
         System.out.println("required pass : " + input_password.getAttribute("required"));
-        System.out.println("validation pass : "+input_password.getAttribute("validationMessage"));
+        System.out.println("validation pass : " + input_password.getAttribute("validationMessage"));
 
         System.out.println("get value entered = " + input_password.getAttribute("value"));
         Driver.takeSnapShot("target/password_hidden.png");
+
+        if (input_password.getAttribute("type").equals("password"))
+            System.out.println("it should be MASKED on default by browser");
+    }
+
+    @And("hits enter button")
+    public void hitsEnterButton() {
+        input_password.sendKeys(Keys.ENTER);
     }
 }
 
