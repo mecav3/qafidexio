@@ -22,27 +22,23 @@ public class LoginStepDefs extends Login_page {
 
     @Given("user is on login page")
     public void userIsOnLoginPage() {
-        Driver.getDriver().get(
-                ConfigurationReader.getProperty("url")
-        );
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
     }
 
     @When("enters username")
     public void entersUsername() {
-         input_user.sendKeys(ConfigurationReader.getProperty("username"));
+        input_user.sendKeys(ConfigurationReader.getProperty("username"));
     }
 
     @Then("enters password")
     public void entersPassword() {
-       input_password.sendKeys(ConfigurationReader.getProperty("password"));
+        input_password.sendKeys(ConfigurationReader.getProperty("password"));
     }
 
     @Then("user logged in")
     public void userLoggedIn() {
-
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(logged_username));
-
         Assert.assertTrue(logged_username.isDisplayed());
     }
 
@@ -58,32 +54,34 @@ public class LoginStepDefs extends Login_page {
 
     @Then("user cannot login warning")
     public void userCannotLoginWarning() {
-
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(wrong_login_warning));
-
         Assert.assertTrue(wrong_login_warning.isDisplayed());
     }
 
     @Then("user get empty field warning")
     public void userGetEmptyFieldWarning() throws Exception {
-
-        takeSnapShot( "target/validate_image.png");
-
-          Assert.assertEquals("Please fill out this field.",
-             Driver.getDriver().findElement(By.name("password")).getAttribute("validationMessage"));
-
-    }
-
-    public static void takeSnapShot(String fileWithPath) throws Exception {
-        File SrcFile = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.FILE);
-        File DestFile = new File(fileWithPath);
-        FileUtils.copyFile(SrcFile, DestFile);
+       Driver.takeSnapShot("target/validate_image.png");
+        Assert.assertEquals("Please fill out this field.",
+                input_password.getAttribute("validationMessage"));
     }
 
     @And("clicks login button")
     public void clicksLoginButton() {
         button_login.click();
+    }
+
+    @Then("check password is hidden")
+    public void checkPasswordIsHidden() throws Exception {
+
+        System.out.println("required user : " + input_user.getAttribute("required"));
+        System.out.println("validation user : "+input_user.getAttribute("validationMessage"));
+
+        System.out.println("required pass : " + input_password.getAttribute("required"));
+        System.out.println("validation pass : "+input_password.getAttribute("validationMessage"));
+
+        System.out.println("get value entered = " + input_password.getAttribute("value"));
+        Driver.takeSnapShot("target/password_hidden.png");
     }
 }
 
