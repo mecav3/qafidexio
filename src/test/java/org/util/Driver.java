@@ -49,7 +49,7 @@ public class Driver {
                     }
                     break;
                 case "chrome":
-                    System.setProperty("webdriver.http.factory", "jdk-http-client");
+                  //  System.setProperty("webdriver.http.factory", "jdk-http-client");
 
                     WebDriverManager.chromedriver().setup();
                   //  WebDriverManager.chromedriver().browserVersion("110.0.5481").setup();

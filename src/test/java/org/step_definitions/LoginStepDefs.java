@@ -87,6 +87,7 @@ public class LoginStepDefs extends Login_page {
 
         if (input_password.getAttribute("type").equals("password"))
             System.out.println("it should be MASKED on default by browser");
+
     }
 
     @And("hits enter button")
